@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import Routes from './src/routes';
 
 export default function App() {
@@ -6,7 +6,7 @@ export default function App() {
   return (
     <>
       <Routes />
-      <StatusBar backgroundColor='transparent'/>
+      <StatusBar barStyle={'dark-content'} backgroundColor='transparent' translucent />
     </>
   );
 }
