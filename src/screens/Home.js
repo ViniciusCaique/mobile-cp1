@@ -34,7 +34,7 @@ export default function Home() {
             .catch((err) => {
                 // n e a melhor forma que eu fiz, mas assim o erro 404 passa e eu consigo pegar os dados das cidades que eu quero,
                 // se eu deixasse vazio o array do useEffect, eu teria que fazer um botao pra atualizar a pagina e renderizar os novos dados
-             })
+                })
     }
 
     useEffect(() => {
@@ -98,6 +98,7 @@ export default function Home() {
                 }}
                 placeholder="Search any city"
                 placeholderTextColor="#FFF"
+                keyboardAppearance="dark"
                 value={location}
                 onChangeText={(value) => setLocation(value)}
             />
