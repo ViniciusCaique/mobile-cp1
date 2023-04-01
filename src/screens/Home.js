@@ -6,20 +6,22 @@ import { View, Text } from "react-native";
 import { api } from '../libs/axios'
 
 const image = { uri: 'https://w.wallhaven.cc/full/6o/wallhaven-6okojq.jpg' }
-const image2 = { uri: 'https://img.freepik.com/free-vector/white-abstract-background_23-2148806276.jpg' }
 
-export default function Home({ navigation }) {
+const apiKey = '3f024b701f398517870c5939f1d0a2e2'
 
-    const [ location, setLocation ] = useState('')
+export default function Home() {
+
+    const [ location, setLocation ] = useState('São Paulo')
     const [ getWeatherData, setWeatherData ] = useState([])
 
-
-    // {
-    //     params: { nameUser: name }
-    // }
-
-    const getData = () => {
-        api.get()
+    const getData = async (url) => {
+        await api.get(url, {
+            params: {
+                q: location,
+                units: "metric",
+                appid: apiKey
+            }
+        })
             .then(response => {
                 const data = response.data
                 const locWeather = {
@@ -30,14 +32,14 @@ export default function Home({ navigation }) {
                 setWeatherData(locWeather)
             })
             .catch((err) => {
-                console.log(err);
-                Alert.alert('Erro', 'Não foi possível carregar os dados');
+                // n e a melhor forma que eu fiz, mas assim o erro 404 passa e eu consigo pegar os dados das cidades que eu quero,
+                // se eu deixasse vazio o array do useEffect, eu teria que fazer um botao pra atualizar a pagina e renderizar os novos dados
              })
     }
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [location])
 
 
     return(
@@ -50,6 +52,7 @@ export default function Home({ navigation }) {
                 style={{ 
                     alignItems: 'center',
                     padding: 5,
+                    marginBottom: 10,
                 }}
             >
                 <Text
@@ -63,6 +66,15 @@ export default function Home({ navigation }) {
                 </Text>
                 <Text
                     style={{
+                        fontSize: 60,
+                        color: '#ebebeb',
+                        padding: 5,
+                    }}
+                >
+                    {parseInt(getWeatherData.temp)}°
+                </Text>
+                <Text
+                    style={{
                         textTransform: "capitalize",
                         fontSize: 25,
                         color: '#ebebeb',
@@ -70,15 +82,6 @@ export default function Home({ navigation }) {
                     }}
                 >
                     {getWeatherData.cond}
-                </Text>
-                <Text
-                    style={{
-                        fontSize: 25,
-                        color: '#ebebeb',
-                        padding: 5,
-                    }}
-                >
-                    {parseInt(getWeatherData.temp)}°
                 </Text>
             </View>
             <TextInput  
@@ -89,7 +92,7 @@ export default function Home({ navigation }) {
                     borderColor: '#8c8c8c',
                     backgroundColor: '#8c8c8c',
                     borderRadius: 5,
-                    marginTop: 10,
+                    marginBottom: 150,
                     padding: 10,
                     paddingHorizontal: 50,
                 }}
