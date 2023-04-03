@@ -10,7 +10,7 @@ const image = { uri: 'https://w.wallhaven.cc/full/6o/wallhaven-6okojq.jpg' }
 
 export default function Home() {
 
-    const [ location, setLocation ] = useState('São Paulo')
+    const [ location, setLocation ] = useState('')
     const [ getWeatherData, setWeatherData ] = useState([])
 
     const getData = async (url) => {
@@ -47,42 +47,45 @@ export default function Home() {
             source={ image }
             blurRadius={3}
         >
-            <View
-                style={{ 
-                    alignItems: 'center',
-                    padding: 5,
-                    marginBottom: 10,
-                }}
-            >
-                <Text
-                    style={{
-                        fontSize: 40,
-                        color: '#ebebeb',
+            {getWeatherData == '' ? null : 
+                <View
+                    style={{ 
+                        alignItems: 'center',
                         padding: 5,
+                        marginBottom: 10,
                     }}
                 >
-                    {getWeatherData.nome}
-                </Text>
-                <Text
-                    style={{
-                        fontSize: 60,
-                        color: '#ebebeb',
-                        padding: 5,
-                    }}
-                >
-                    {Math.round(getWeatherData.temp)}°
-                </Text>
-                <Text
-                    style={{
-                        textTransform: "capitalize",
-                        fontSize: 25,
-                        color: '#ebebeb',
-                        padding: 5,
-                    }}
-                >
-                    {getWeatherData.cond}
-                </Text>
-            </View>
+                    <Text
+                        style={{
+                            fontSize: 40,
+                            color: '#ebebeb',
+                            padding: 5,
+                        }}
+                    >
+                        {getWeatherData.nome}
+                    </Text>
+                    <Text
+                        style={{
+                            fontSize: 60,
+                            color: '#ebebeb',
+                            padding: 5,
+                        }}
+                    >
+                        {Math.round(getWeatherData.temp)}°
+                    </Text>
+                    <Text
+                        style={{
+                            textTransform: "capitalize",
+                            fontSize: 25,
+                            color: '#ebebeb',
+                            padding: 5,
+                        }}
+                    >
+                        {getWeatherData.cond}
+                    </Text>
+                </View>
+            } 
+        
             <TextInput  
                 style={{
                     color: 'white',
